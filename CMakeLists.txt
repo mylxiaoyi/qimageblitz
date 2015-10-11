@@ -1,10 +1,7 @@
+cmake_minimum_required(VERSION 2.8)
 project(blitz)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules )
-find_package(Qt4 REQUIRED)
-# properly set up compile flags (QT_DEBUG/QT_NO_DEBUG, ...)
-include(${QT_USE_FILE})
-
+find_package(Qt5 REQUIRED COMPONENTS Gui Widgets)
 
 set(LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)" )
 set(EXEC_INSTALL_PREFIX  ${CMAKE_INSTALL_PREFIX}       CACHE PATH  "Base directory for executables and libraries")

@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 2.8)
+
 project(blitz_lib) 
 include(CheckCXXSourceCompiles)
 include(CheckIncludeFile)
@@ -5,9 +7,7 @@ include(CheckIncludeFile)
 include_directories(
   ${CMAKE_SOURCE_DIR}  
   ${blitz_lib_BINARY_DIR} 
-  ${QT_INCLUDE_DIR}
-  ${QT_QTCORE_INCLUDE_DIR}  
-  ${QT_QTGUI_INCLUDE_DIR}
+  ${Qt5Gui_INCLUDE_DIRS}
   )
 
 CHECK_INCLUDE_FILE(stdint.h HAVE_STDINT_H)
@@ -44,11 +44,12 @@ configure_file (config-externalasm.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-ex
 
 if(COMMAND cmake_policy)
       cmake_policy(SET CMP0003 NEW)
+      cmake_policy(SET CMP0028 NEW)
 endif(COMMAND cmake_policy) 
 
 add_library(qimageblitz SHARED ${blitz_LIB_SRCS} ${blitz_LIB_EXTRA_SRCS})
 
-target_link_libraries(qimageblitz ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY})
+target_link_libraries(qimageblitz ${Qt5Gui_LIBRARIES}) 
 if (NOT CMAKE_COMPILER_IS_GNUCXX AND CMAKE_SYSTEM_NAME MATCHES SunOS)
     target_link_libraries(qimageblitz -lm -lsunmath)
 endif (NOT CMAKE_COMPILER_IS_GNUCXX AND CMAKE_SYSTEM_NAME MATCHES SunOS)

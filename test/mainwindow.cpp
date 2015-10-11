@@ -519,5 +519,3 @@ void BlitzMainWindow::slotDecBlueIntensity()
     lbl->update();
 }
 
-#include "mainwindow.moc"
-

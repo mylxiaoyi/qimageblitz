@@ -1,7 +1,7 @@
 #ifndef __SCALEDIALOG_H
 #define __SCALEDIALOG_H
 
-#include <QtGui/QDialog>
+#include <QDialog>
 class QSpinBox;
 class QComboBox;
 
