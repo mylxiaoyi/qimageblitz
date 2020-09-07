@@ -30,7 +30,7 @@ set(blitz_LIB_SRCS blitz.cpp colors.cpp convolve.cpp histogram.cpp
                    blitzcpu.cpp scale.cpp scalefilter.cpp gradient.cpp)
 
 if(HAVE_MMX)
-    if(NOT APPLE AND NOT WIN32)
+    if(NOT WIN32)
         set( blitz_LIB_SRCS ${blitz_LIB_SRCS} asm_scale.S )
         add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/asm_scale.o
             COMMAND gcc -c ${CMAKE_CURRENT_SOURCE_DIR}/asm_scale.S
@@ -47,31 +47,31 @@ if(COMMAND cmake_policy)
       cmake_policy(SET CMP0028 NEW)
 endif(COMMAND cmake_policy) 
 
-add_library(qimageblitz SHARED ${blitz_LIB_SRCS} ${blitz_LIB_EXTRA_SRCS})
+add_library(q5imageblitz SHARED ${blitz_LIB_SRCS} ${blitz_LIB_EXTRA_SRCS})
 
-target_link_libraries(qimageblitz ${Qt5Gui_LIBRARIES}) 
+target_link_libraries(q5imageblitz ${Qt5Gui_LIBRARIES}) 
 if (NOT CMAKE_COMPILER_IS_GNUCXX AND CMAKE_SYSTEM_NAME MATCHES SunOS)
-    target_link_libraries(qimageblitz -lm -lsunmath)
+    target_link_libraries(q5imageblitz -lm -lsunmath)
 endif (NOT CMAKE_COMPILER_IS_GNUCXX AND CMAKE_SYSTEM_NAME MATCHES SunOS)
 
-set_target_properties(qimageblitz PROPERTIES
+set_target_properties(q5imageblitz PROPERTIES
                             VERSION ${BLITZ_LIB_MAJOR_VERSION}.${BLITZ_LIB_MINOR_VERSION}.${BLITZ_LIB_PATCH_VERSION}
                             SOVERSION ${BLITZ_LIB_MAJOR_VERSION}
                             DEFINE_SYMBOL MAKE_QIMAGEBLITZ_LIB
 )
-install( TARGETS qimageblitz  
+install( TARGETS q5imageblitz  
     RUNTIME DESTINATION ${BIN_INSTALL_DIR} 
     LIBRARY DESTINATION ${LIB_INSTALL_DIR} 
     ARCHIVE DESTINATION ${LIB_INSTALL_DIR} 
 )
 
-install( FILES qimageblitz.h qimageblitz_export.h blitzcpu.h DESTINATION include/qimageblitz COMPONENT Devel )
+install( FILES qimageblitz.h qimageblitz_export.h blitzcpu.h DESTINATION include/q5imageblitz COMPONENT Devel )
 
 if(NOT WIN32)
-  configure_file("qimageblitz.pc.cmake" "${CMAKE_CURRENT_BINARY_DIR}/qimageblitz.pc"
+  configure_file("qimageblitz.pc.cmake" "${CMAKE_CURRENT_BINARY_DIR}/q5imageblitz.pc"
   @ONLY) 
 
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qimageblitz.pc DESTINATION 
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/q5imageblitz.pc DESTINATION 
   ${LIB_INSTALL_DIR}/pkgconfig)  
 endif(NOT WIN32)
 
