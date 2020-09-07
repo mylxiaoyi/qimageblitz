@@ -940,7 +940,7 @@ float* BlitzPrivate::getBlurKernel(int &kernel_width, float sigma)
     long i;
 
     if(sigma == 0.0)
-        return(false);
+        return(NULL);
     if(kernel_width == 0)
         kernel_width = 3;
 
