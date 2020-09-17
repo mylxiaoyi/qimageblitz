@@ -1,4 +1,4 @@
-project(blitztest)
+project(blitztest_qt5)
 
 if (WIN32)
  set(CMAKE_DEBUG_POSTFIX "d")
@@ -28,9 +28,9 @@ if(COMMAND cmake_policy)
   cmake_policy(SET CMP0028 NEW)
 endif(COMMAND cmake_policy) 
 
-add_executable(blitztest ${GUI_SOURCE_FILES} ${GUI_HEADER_FILES_HPP})
+add_executable(blitztest_qt5 ${GUI_SOURCE_FILES} ${GUI_HEADER_FILES_HPP})
 
-target_link_libraries(blitztest ${Qt5Widgets_LIBRARIES} qimageblitz)
+target_link_libraries(blitztest_qt5 ${Qt5Widgets_LIBRARIES} q5imageblitz)
 
-install(TARGETS blitztest DESTINATION ${BIN_INSTALL_DIR})
+install(TARGETS blitztest_qt5 DESTINATION ${BIN_INSTALL_DIR})
 
