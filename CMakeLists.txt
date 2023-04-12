@@ -3,12 +3,13 @@ project(blitz)
 
 find_package(Qt5 REQUIRED COMPONENTS Gui Widgets)
 
-set(LIB_SUFFIX "" CACHE STRING "Define suffix of directory name (32/64)" )
-set(EXEC_INSTALL_PREFIX  ${CMAKE_INSTALL_PREFIX}       CACHE PATH  "Base directory for executables and libraries")
-#
+include(GNUInstallDirs)
+
 ## the following are directories where stuff will be installed to
-set(BIN_INSTALL_DIR          "${EXEC_INSTALL_PREFIX}/bin" CACHE PATH "The kde binary install dir (default prefix/bin)")
-set(LIB_INSTALL_DIR          "${EXEC_INSTALL_PREFIX}/lib${LIB_SUFFIX}"     CACHE PATH "The subdirectory relative to the install prefix where libraries will be installed (default is /lib${LIB_SUFFIX})")
+set(BIN_INSTALL_DIR "${CMAKE_INSTALL_BINDIR}")
+set(LIB_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}")
+
+SET(CMAKE_CXX_STANDARD 11)
 
 if (CMAKE_COMPILER_IS_GNUCXX)
    if (CMAKE_SYSTEM_NAME MATCHES Linux)
@@ -26,7 +27,7 @@ endif (WIN32)
 # By default cmake builds the targets with full RPATH to everything in the build directory,
 # but then removes the RPATH when installing.
 # These two options below make it set the RPATH of the installed targets to all
-# RPATH directories outside the current CMAKE_BINARY_DIR and also the library 
+# RPATH directories outside the current CMAKE_BINARY_DIR and also the library
 # install directory. Alex
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH  TRUE)
 set(CMAKE_INSTALL_RPATH "${LIB_INSTALL_DIR}" )
@@ -37,3 +38,12 @@ endif(APPLE)
 
 add_subdirectory(blitz)
 add_subdirectory(test)
+
+set(ConfigPackageLocation ${CMAKE_INSTALL_LIBDIR}/cmake/QImageBlitz)
+
+install(EXPORT QImageBlitzConfig
+  NAMESPACE
+    QImageBlitz::
+  DESTINATION
+    ${ConfigPackageLocation}
+)

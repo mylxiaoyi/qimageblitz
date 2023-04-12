@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(blitz_lib) 
+project(blitz_lib)
 include(CheckCXXSourceCompiles)
 include(CheckIncludeFile)
 
 include_directories(
-  ${CMAKE_SOURCE_DIR}  
-  ${blitz_lib_BINARY_DIR} 
+  ${CMAKE_SOURCE_DIR}
+  ${blitz_lib_BINARY_DIR}
   ${Qt5Gui_INCLUDE_DIRS}
   )
 
@@ -45,11 +45,11 @@ configure_file (config-externalasm.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-ex
 if(COMMAND cmake_policy)
       cmake_policy(SET CMP0003 NEW)
       cmake_policy(SET CMP0028 NEW)
-endif(COMMAND cmake_policy) 
+endif(COMMAND cmake_policy)
 
 add_library(q5imageblitz SHARED ${blitz_LIB_SRCS} ${blitz_LIB_EXTRA_SRCS})
 
-target_link_libraries(q5imageblitz ${Qt5Gui_LIBRARIES}) 
+target_link_libraries(q5imageblitz ${Qt5Gui_LIBRARIES})
 if (NOT CMAKE_COMPILER_IS_GNUCXX AND CMAKE_SYSTEM_NAME MATCHES SunOS)
     target_link_libraries(q5imageblitz -lm -lsunmath)
 endif (NOT CMAKE_COMPILER_IS_GNUCXX AND CMAKE_SYSTEM_NAME MATCHES SunOS)
@@ -59,20 +59,23 @@ set_target_properties(q5imageblitz PROPERTIES
                             SOVERSION ${BLITZ_LIB_MAJOR_VERSION}
                             DEFINE_SYMBOL MAKE_QIMAGEBLITZ_LIB
 )
-install( TARGETS q5imageblitz  
-    RUNTIME DESTINATION ${BIN_INSTALL_DIR} 
-    LIBRARY DESTINATION ${LIB_INSTALL_DIR} 
-    ARCHIVE DESTINATION ${LIB_INSTALL_DIR} 
+target_include_directories(q5imageblitz
+    INTERFACE
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/q5imageblitz>
+)
+install( TARGETS q5imageblitz
+    EXPORT QImageBlitzConfig
+    RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+    LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+    ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
 )
 
 install( FILES qimageblitz.h qimageblitz_export.h blitzcpu.h DESTINATION include/q5imageblitz COMPONENT Devel )
 
 if(NOT WIN32)
   configure_file("qimageblitz.pc.cmake" "${CMAKE_CURRENT_BINARY_DIR}/q5imageblitz.pc"
-  @ONLY) 
+  @ONLY)
 
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/q5imageblitz.pc DESTINATION 
-  ${LIB_INSTALL_DIR}/pkgconfig)  
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/q5imageblitz.pc DESTINATION
+  ${LIB_INSTALL_DIR}/pkgconfig)
 endif(NOT WIN32)
-
-
